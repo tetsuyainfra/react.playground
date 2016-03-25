@@ -1,0 +1,39 @@
+
+@import './sanitize.scss';
+// * {
+//   box-sizing: border-box;
+//   margin: 0;
+//   padding: 0;
+// }
+
+
+body {
+  background-color: gray;
+}
+
+// app-main {
+//   position: absolute;
+//   background-color: tan;
+//   top: 0;
+//   bottom: 0;
+//   right: 0;
+//   left: 0;
+// }
+//
+// .main {
+//   background-color: gray;
+//   height: 100%;
+// }
+
+.left-pane {
+  background-color: #C5CAE9;
+  > div {
+    background-color: #009688;
+  }
+  > div:nth-child(odd) {
+    background-color: #004d40;
+  }
+}
+.right-pane {
+  background-color: #B39DDB;
+}
