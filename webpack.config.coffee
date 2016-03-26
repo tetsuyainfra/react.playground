@@ -9,13 +9,14 @@ webpackConfig = {
   #context: __dirname + "/app",
   entry:
     app: './src/app.coffee'
+    #_init: './src/assets/_init.coffee'
     #mobile: './src/mobile.js'
   output:
     filename: '[name].js'
     path: __dirname + '/built'
 
   resolve:
-    extensions: ['', '.js', '.coffee']
+    extensions: ['', '.js', '.coffee', '.jsx']
 
   plugins: [
     # new webpack.ProvidePlugin({
@@ -35,9 +36,19 @@ webpackConfig = {
   module:
     loaders: [
       {
+        test: /\.js$/
+        exclude: /(node_modules|bower_components)/
+        loader: "envify"
+      }
+      {
+        test: /\.jsx$/
+        exclude: /(node_modules|bower_components)/
+        loader: "envify!babel-loader"
+      }
+      {
         test: /\.coffee$/
         #include: []
-        loader: "coffee"
+        loader: "envify!coffee"
       }
       {
         test: /\.jade$/
@@ -63,6 +74,10 @@ webpackConfig = {
 		  {
         test: /\.png$/
         loader: "url-loader?limit=10000&mimetype=image/png"
+      }
+		  {
+        test: /\.gif$/
+        loader: "url-loader?limit=10000&mimetype=image/gif"
       }
     ]
 

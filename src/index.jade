@@ -4,7 +4,23 @@ html()
     meta(charset="utf-8")
     meta(name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no")
     title test
+    script(type="text/javascript").
+      var WebFontConfig = {
+      google: { families: [ 'Roboto:400,300,500:latin' ] }
+      };
+      (function() {
+      var wf = document.createElement('script');
+      wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+      '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+      wf.type = 'text/javascript';
+      wf.async = 'true';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(wf, s);
+      })();
   body() 
-    .left-pane()
-    div#content.right-pane()
+    //- .left-pane()
+    //-   include ./assets/ajax-loader.html
+    //- div#content.right-pane()
+    div#content.init
+      include ./assets/ajax-loader.html
     script(src="./app.js", type="text/javascript")

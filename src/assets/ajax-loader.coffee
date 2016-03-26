@@ -1,0 +1,2 @@
+
+require('./ajax-loader.gif')
