@@ -6,6 +6,8 @@ import {GlobalProvider, stateContext, dispatchContext} from './store'
 
 import {initialState, reducer} from './reducer'
 
+import {Api} from './api'
+
 const Father: React.FC<{}> = (props) =>{
   const state = React.useContext(stateContext)
   const dispatch = React.useContext(dispatchContext)
@@ -67,13 +69,20 @@ const GrandChild: React.FC<{}> = (props) =>{
   const state = React.useContext(stateContext)
   const dispatch = React.useContext(dispatchContext)
 
+  const callApi = async () => {
+    const ipApi = Api.createIp()
+    console.log(ipApi.url)
+    ipApi.get()
+    .then((data: {ip: string})=>{
+      dispatch({type: 'set_ip', payload: data.ip})
+    })
+  }
+
   return (
     <div>
       <h1>
-        GrandChild : {state.count}
-        <input type="button" onClick={()=>{dispatch({type: 'increment'})}} value="+"/>
-        <input type="button" onClick={()=>{dispatch({type: 'decrement'})}} value="-"/>
-        <input type="button" onClick={()=>{dispatch({type: 'reset'})}} value="reset"/>
+        GrandChild : {state.ip}
+        <input type="button" onClick={callApi} value="api"/>
       </h1>
       {props.children}
     </div>
@@ -96,7 +105,7 @@ const Family: React.FC<{}> = (props) =>{
 const App = () => {
   return (
     <div className="App">
-      <GlobalProvider value={{count: 123, data: []}}>
+      <GlobalProvider>
         <Family />
       </GlobalProvider>
     </div>

@@ -2,6 +2,7 @@ import * as React from 'react'
 
 export const initialState = {
   count: 0,
+  ip: "no ip info",
   data: [
     { url: 'https://google.com/'},
     { url: 'https://yahoo.com/'}
@@ -10,6 +11,7 @@ export const initialState = {
 // export type StateType = typeof initialState
 export type StateType = {
   count: number,
+  ip: string,
   data: Array<{
     url: string
   }>
@@ -21,7 +23,7 @@ export type ActionType = {
 }
 
 export const reducer : React.Reducer<StateType, ActionType> = (state, action) => {
-  const { ... reduced } = state
+  const { ...reduced } = state
   switch (action.type) {
     case 'reset':
       return {
@@ -37,6 +39,11 @@ export const reducer : React.Reducer<StateType, ActionType> = (state, action) =>
       return {
         ...reduced,
         count: state.count - 1
+      };
+    case 'set_ip':
+      return {
+        ...reduced,
+        ip: action.payload
       };
     default:
       throw new Error("Not Implemented");
