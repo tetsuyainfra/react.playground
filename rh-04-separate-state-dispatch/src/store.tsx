@@ -26,6 +26,8 @@ export const GlobalProvider : React.FC<GlobalProviderProps> = (props) => {
   const {value, init} = props
   const [state, dispatch] = React.useReducer(reducer, value ? value : initialState, init ? init : defaultInitialize)
 
+  console.log('GlobalProvider')
+
   return (
     <dispatchContext.Provider value={dispatch} >
       <stateContext.Provider value={state} >
