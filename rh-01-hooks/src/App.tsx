@@ -2,23 +2,22 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+
+const Counter = () => {
+  const [count, setCount] = React.useState(0)
+  return <div>
+    <input type="button" onClick={()=>{setCount(count - 1)}} value="-"/>
+    <input type="button" onClick={()=>{setCount(count + 1)}} value="+"/>
+    <br />
+    <input type="text" value={count} />
+  </div>
+}
+
+
 const App = () => {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Counter />
     </div>
   );
 }
