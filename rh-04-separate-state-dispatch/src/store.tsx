@@ -6,17 +6,31 @@ type StoreWithAction =  {
   state: StateType
   dispatch: React.Dispatch<ActionType>
 }
-export const GlobalContext = React.createContext<StoreWithAction>({
-  state: initialState,
-  dispatch: () => {}
-})
+
+export const stateContext = React.createContext<StateType>(initialState)
+
+export const dispatchContext = React.createContext<React.Dispatch<ActionType>>(()=>true)
+
+export const defaultInitialize = (state: StateType) : StateType => {
+  console.log('defaultInitalize()', state)
+  return state
+}
 
 
+type GlobalProviderProps = {
+  value?: StateType
+  init?: (state: StateType) => StateType
+}
 
-export const GlobalProvider : React.FC<{value: StateType}> = (props) => {
-  const [state, dispatch] = React.useReducer(reducer, props.value)
+export const GlobalProvider : React.FC<GlobalProviderProps> = (props) => {
+  const {value, init} = props
+  const [state, dispatch] = React.useReducer(reducer, value ? value : initialState, init ? init : defaultInitialize)
 
-  return <GlobalContext.Provider value={{ state: state, dispatch: dispatch}}>
-    {props.children}
-  </GlobalContext.Provider>
+  return (
+    <dispatchContext.Provider value={dispatch} >
+      <stateContext.Provider value={state} >
+        {props.children}
+      </stateContext.Provider>
+    </dispatchContext.Provider>
+  )
 }

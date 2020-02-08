@@ -2,12 +2,18 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-import {GlobalProvider, GlobalContext} from './store'
+import {GlobalProvider, stateContext, dispatchContext} from './store'
 
 import {initialState, reducer} from './reducer'
 
 const Father: React.FC<{}> = (props) =>{
-  const {state, dispatch} = React.useContext(GlobalContext)
+  const state = React.useContext(stateContext)
+  const dispatch = React.useContext(dispatchContext)
+
+  const handleIncrementTwice = async () =>{
+    dispatch({type: 'increment'})
+    dispatch({type: 'increment'})
+  }
 
   return (
     <div>
@@ -16,14 +22,32 @@ const Father: React.FC<{}> = (props) =>{
         <input type="button" onClick={()=>{dispatch({type: 'increment'})}} value="+"/>
         <input type="button" onClick={()=>{dispatch({type: 'decrement'})}} value="-"/>
         <input type="button" onClick={()=>{dispatch({type: 'reset'})}} value="reset"/>
+        <input type="button" onClick={handleIncrementTwice} value="twice"/>
       </h1>
       {props.children}
     </div>
   )
 }
 
+const delayRun = (waitSeconds :number, someFunction: Function) => {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve(someFunction())
+    }, waitSeconds)
+  })
+}
+
+
 const Child: React.FC<{}> = (props) =>{
-  const {state, dispatch} = React.useContext(GlobalContext)
+  const state = React.useContext(stateContext)
+  const dispatch = React.useContext(dispatchContext)
+
+  const handleIncrementTwiceLater = async () =>{
+    dispatch({type: 'increment'})
+    delayRun(1000,()=>{
+      dispatch({type: 'increment'})
+    })
+  }
 
   return (
     <div>
@@ -32,6 +56,7 @@ const Child: React.FC<{}> = (props) =>{
         <input type="button" onClick={()=>{dispatch({type: 'increment'})}} value="+"/>
         <input type="button" onClick={()=>{dispatch({type: 'decrement'})}} value="-"/>
         <input type="button" onClick={()=>{dispatch({type: 'reset'})}} value="reset"/>
+        <input type="button" onClick={handleIncrementTwiceLater} value="later"/>
       </h1>
       {props.children}
     </div>
@@ -39,7 +64,8 @@ const Child: React.FC<{}> = (props) =>{
 }
 
 const GrandChild: React.FC<{}> = (props) =>{
-  const {state, dispatch} = React.useContext(GlobalContext)
+  const state = React.useContext(stateContext)
+  const dispatch = React.useContext(dispatchContext)
 
   return (
     <div>
@@ -70,7 +96,7 @@ const Family: React.FC<{}> = (props) =>{
 const App = () => {
   return (
     <div className="App">
-      <GlobalProvider value={{count: 100, data: []}}>
+      <GlobalProvider value={{count: 123, data: []}}>
         <Family />
       </GlobalProvider>
     </div>
