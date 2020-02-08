@@ -7,7 +7,7 @@ abstract class Source {
     this.url = url
   }
 
-  abstract get() : Promise<any>
+  abstract get(option?: {delay?: number}) : Promise<any>
 }
 
 class JsonSource extends Source{
@@ -20,7 +20,20 @@ class JsonSource extends Source{
     return request(options)
   }
 
-  get() : Promise<any> { return this._json_get() }
+  get(option? : {delay?: number}) : Promise<any> {
+    const { delay } = { ...option }
+
+    if (delay){
+      return new Promise(resolve => {
+        setTimeout(() => {
+          resolve(this._json_get())
+        }, delay)
+      })
+    }else{
+      return this._json_get()
+    }
+}
+
 }
 
 export class Api {

@@ -70,9 +70,18 @@ const GrandChild: React.FC<{}> = (props) =>{
   const dispatch = React.useContext(dispatchContext)
 
   const callApi = async () => {
-    const ipApi = Api.createIp()
-    console.log(ipApi.url)
-    ipApi.get()
+    dispatch({type: 'set_ip', payload: "loading...."})
+
+    Api.createIp().get()
+    .then((data: {ip: string})=>{
+      dispatch({type: 'set_ip', payload: data.ip})
+    })
+  }
+
+  const callApiDelay = async () => {
+    dispatch({type: 'set_ip', payload: "loading...."})
+
+    Api.createIp().get({delay: 5000})
     .then((data: {ip: string})=>{
       dispatch({type: 'set_ip', payload: data.ip})
     })
@@ -83,6 +92,7 @@ const GrandChild: React.FC<{}> = (props) =>{
       <h1>
         GrandChild : {state.ip}
         <input type="button" onClick={callApi} value="api"/>
+        <input type="button" onClick={callApiDelay} value="apiDelay"/>
       </h1>
       {props.children}
     </div>
