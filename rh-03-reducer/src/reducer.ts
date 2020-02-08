@@ -21,7 +21,7 @@ export type ActionType = {
 }
 
 export const reducer : React.Reducer<StateType, ActionType> = (state, action) => {
-  const { ... reduced } = state
+  const { ...reduced } = state
   switch (action.type) {
     case 'reset':
       return {

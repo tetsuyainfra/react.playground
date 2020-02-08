@@ -8,9 +8,8 @@ type StoreWithAction =  {
 }
 export const GlobalContext = React.createContext<StoreWithAction>({
   state: initialState,
-  dispatch: () => {}
+  dispatch: () => {console.log('GlobalContext at dispatch')}
 })
-
 
 
 export const GlobalProvider : React.FC<{value: StateType}> = (props) => {
