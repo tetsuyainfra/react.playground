@@ -4,34 +4,51 @@ import './App.css';
 
 import {GlobalProvider, GlobalContext} from './store'
 
+import {initialState, reducer} from './reducer'
+
 const Father: React.FC<{}> = (props) =>{
-  const state = React.useContext(GlobalContext)
+  const {state, dispatch} = React.useContext(GlobalContext)
 
   return (
     <div>
-      <h1>Father : {state.count}</h1>
+      <h1>
+        Father : {state.count}
+        <input type="button" onClick={()=>{dispatch({type: 'increment'})}} value="+"/>
+        <input type="button" onClick={()=>{dispatch({type: 'decrement'})}} value="-"/>
+        <input type="button" onClick={()=>{dispatch({type: 'reset'})}} value="reset"/>
+      </h1>
       {props.children}
     </div>
   )
 }
 
 const Child: React.FC<{}> = (props) =>{
-  const state = React.useContext(GlobalContext)
+  const {state, dispatch} = React.useContext(GlobalContext)
 
   return (
     <div>
-      <h2>Child : {state.count}</h2>
+      <h1>
+        Child : {state.count}
+        <input type="button" onClick={()=>{dispatch({type: 'increment'})}} value="+"/>
+        <input type="button" onClick={()=>{dispatch({type: 'decrement'})}} value="-"/>
+        <input type="button" onClick={()=>{dispatch({type: 'reset'})}} value="reset"/>
+      </h1>
       {props.children}
     </div>
   )
 }
 
 const GrandChild: React.FC<{}> = (props) =>{
-  const state = React.useContext(GlobalContext)
+  const {state, dispatch} = React.useContext(GlobalContext)
 
   return (
     <div>
-      <h3>Child : {state.count}</h3>
+      <h1>
+        GrandChild : {state.count}
+        <input type="button" onClick={()=>{dispatch({type: 'increment'})}} value="+"/>
+        <input type="button" onClick={()=>{dispatch({type: 'decrement'})}} value="-"/>
+        <input type="button" onClick={()=>{dispatch({type: 'reset'})}} value="reset"/>
+      </h1>
       {props.children}
     </div>
   )

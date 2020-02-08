@@ -1,12 +1,22 @@
 import * as React from 'react'
 
-import {StateType, initialState} from './reducer'
+import {reducer, StateType, ActionType, initialState} from './reducer'
 
-export const GlobalContext = React.createContext<StateType>(initialState)
+type StoreWithAction =  {
+  state: StateType
+  dispatch: React.Dispatch<ActionType>
+}
+export const GlobalContext = React.createContext<StoreWithAction>({
+  state: initialState,
+  dispatch: () => {}
+})
+
 
 
 export const GlobalProvider : React.FC<{value: StateType}> = (props) => {
-  return <GlobalContext.Provider value={props.value}>
+  const [state, dispatch] = React.useReducer(reducer, props.value)
+
+  return <GlobalContext.Provider value={{ state: state, dispatch: dispatch}}>
     {props.children}
   </GlobalContext.Provider>
 }
