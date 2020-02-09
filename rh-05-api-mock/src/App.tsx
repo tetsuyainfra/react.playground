@@ -1,10 +1,10 @@
 import React from 'react';
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 
 import {GlobalProvider, stateContext, dispatchContext} from './store'
 
-import {initialState, reducer} from './reducer'
+// import {initialState, reducer} from './reducer'
 
 import {Api} from './api'
 
